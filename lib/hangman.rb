@@ -40,4 +40,20 @@ end
 
 # Start a new game
 game = Hangman.new
-puts "Secret word selected: #{game.secret_word}"
+puts "Welcome to Hangman!"
+
+# Main game loop
+until game.game_over?
+  puts "\nWord: #{game.display_progress}"
+  puts "Guesses left: #{game.guesses_left}"
+  puts "Incorrect guesses: #{game.incorrect_guesses.join(', ')}"
+  print "Enter your guess: "
+  guess = gets.chomp
+  game.guess(guess)
+end
+
+if game.guesses_left > 0
+  puts "Congratulations! You've guessed the word: #{game.secret_word}"
+else
+  puts "Game over! The word was: #{game.secret_word}"
+end
