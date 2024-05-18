@@ -36,11 +36,16 @@ class Hangman
   def game_over?
     @guesses_left <= 0 || !display_progress.include?('_')
   end
+
+  def valid_guess?(input)
+    input.length == 1 && input =~ /[a-zA-Z]/
+  end
 end
 
 # Start a new game
 game = Hangman.new
 puts "Welcome to Hangman!"
+puts "Secret word selected: #{game.secret_word}"  # For debugging, remove this line in the final version
 
 # Main game loop
 until game.game_over?
@@ -49,6 +54,12 @@ until game.game_over?
   puts "Incorrect guesses: #{game.incorrect_guesses.join(', ')}"
   print "Enter your guess: "
   guess = gets.chomp
+
+  unless game.valid_guess?(guess)
+    puts "Invalid input. Please enter a single letter."
+    next
+  end
+
   game.guess(guess)
 end
 
